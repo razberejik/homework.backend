@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="CV.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html 2</title>
+    <script src="CV.js"></script>
+</head>
+<body>
+    {% include('menu.html') %}
+    <form action="CV.html">
+        <h2>CONTACT US</h2>
+        <label for="">First Name</label><br>
+        <input type="text"><br>
+        <label for="">Last Name</label><br>
+        <input type="text"><br>
+        <label for="">Email</label><br>
+        <input id = 'email' type="email" pattern=".+@.+\.com" required> <br>
+        <label id='emailvaild' for=""></label><br>
+        <label for="">phone</label><br>
+        <input type="tel">
+        <button onclick="validEmail()">send</button>
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends 'base.html' %} <!-- uses base.html -->
+
+{% block title %} <!-- defines a new title (in base.html we wrapped the title in block) -->
+    assignment8
+{% endblock %}
+
+{% block body %}
+    {{ super() }}
+    <h2>Hey There  {{ name | default('New', true) | upper() }} {{ last_name | default('User', true) | lower() }}!</h2>
+        {% if  name %}
+            <p> Thank You for joined our site</p>
+            {% else %}
+            <p> need to log in </p>
+        {% endif %}
+<!-- loop -->
+    <h3>Hobbies Details:</h3>
+        <ul>
+            {% for key, value in profile.items() %}
+                <li>{{ key }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+
+
+{% endblock %}
