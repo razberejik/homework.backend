@@ -6,6 +6,10 @@
 </head>
 <body>
     {% include('menu.html') %}
+    {% if session.username %}
+        <h2> Hey  {{ session.username }} </h2>
+    {% endif %}
+
     <h1> all the work is on app.py</h1>
 
 </body>

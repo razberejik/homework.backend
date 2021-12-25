@@ -6,8 +6,13 @@
 
 {% block body %}
     {{ super() }}
-    <h2>Hey There  {{ name | default('New', true) | upper() }} {{ last_name | default('User', true) | lower() }}!</h2>
-        {% if  name %}
+    {% if session.username %}
+        <h2> Hey There {{ session.username }} </h2>
+    {% else %}
+         <h2>Hey There  {{ name | default('New', true) | upper() }} {{ last_name | default('User', true) | lower() }}!</h2>
+    {% endif %}
+
+    {% if  name %}
             <p> Thank You for joined our site</p>
             {% else %}
             <p> need to log in </p>

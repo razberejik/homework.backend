@@ -10,6 +10,9 @@
 </head>
 <body>
     {% include('menu.html') %}
+        {% if session.username %}
+        <h2> Hello {{ session.username }} </h2>
+    {% endif %}
     <div id="GridContainer">
         <div id="item1">
             <h1>Wessly CV</h1> 
