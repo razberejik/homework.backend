@@ -1,4 +1,5 @@
-from flask import Flask, redirect, url_for, render_template, request, session
+from flask import Flask, redirect, url_for, render_template, request, session, Blueprint
+from interact_db import interact_db
 
 app = Flask(__name__)
 
@@ -60,6 +61,58 @@ def assignment9_page():
 def logout_func():
     session['username'] = ''
     return render_template('assignment9.html')
+
+change_message = ""
+
+assignment10 = Blueprint('assignment10', __name__, static_folder='static', static_url_path='/', template_folder='templates')
+
+@app.route("/assignment10", methods=['GET', 'POST'])
+def assignment10_page():
+    global message_has_been_changed
+    message_has_been_changed = ""
+    return render_template('assignment10.html')
+
+
+app.register_blueprint(assignment10)
+
+# insert user
+@app.route('/insert_user', methods=['POST'])
+def insert_user_func():
+    name = request.form['name']
+    email = request.form['email']
+    query = "INSERT INTO users(name, email) VALUES ('%s', '%s')" % (name, email)
+    interact_db(query=query, query_type='commit')
+    global message_has_been_changed
+    message_has_been_changed = "The user "+name+" is inserted"
+    return redirect('/user_list')
+
+# update user
+@app.route('/update_user', methods=['POST'])
+def update_user_func():
+    name = request.form['name']
+    new_email = request.form['new_email']
+    query = "update users set email = '%s' where name = '%s'" % (new_email, name)
+    interact_db(query=query, query_type='commit')
+    global message_has_been_changed
+    message_has_been_changed = "The email of the user "+name+" is updated"
+    return redirect('/user_list')
+
+# delete user
+@app.route('/delete_user', methods=['POST'])
+def delete_user_func():
+    name = request.form['name']
+    query = "DELETE FROM users WHERE name='%s'" % name
+    interact_db(query, query_type='commit')
+    global message_has_been_changed
+    message_has_been_changed = "The user "+name+" was deleted"
+    return redirect('/user_list')
+
+# display user
+@app.route('/user_list')
+def user_list_func():
+    query = "select * from users"
+    query_result = interact_db(query=query, query_type='fetch')
+    return render_template('assignment10.html', user_list=query_result, message_has_been_changed=message_has_been_changed)
 
 
 if __name__ == '__main__':

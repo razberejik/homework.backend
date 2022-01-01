@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ {% include('menu.html') %}
+{#Insertion form#}
+ <h2> Insertion form </h2>
+<form action="/insert_user" method="POST">
+        Name: <input name="name" type="text">
+        <br><br>
+        Email: <input name="email" type="email">
+        <br><br>
+        <input type="submit" value="Insert">
+    </form>
+
+
+{#update form#}
+ <h2> Update form </h2>
+<form action="/update_user" method="POST">
+        Name: <input name="name" type="text">
+        <br><br>
+        New Email: <input name="new_email" type="email">
+        <br><br>
+        <input type="submit" value="Update">
+    </form>
+{#delete form#}
+ <h2>Delete form</h2>
+ <form action="/delete_user" method="POST">
+     Name: <input name="name" type="text"> <br><br>
+     <input type="submit" value="Delete">
+ </form>
+
+{% if user_list %}
+            <h3>Desplay User List:</h3>
+            <ul>
+                {% for user in user_list %}
+                <li>
+                    <b>Name:</b> {{ user.name }}, <b>Email:</b> {{ user.email }}
+                </li>
+                {% endfor %}
+            </ul>
+            <p>{{ message_has_been_changed}}</p>
+        {% endif %}
+
+</body>
+</html>
