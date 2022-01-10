@@ -1,5 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request, session, Blueprint
-from interact_db import interact_db
+from interact_db import interact_db, query_to_json
+import requests
+import json
 
 app = Flask(__name__)
 
@@ -64,6 +66,24 @@ def logout_func():
 
 from pages.assignment10.assignment10 import assignment10
 app.register_blueprint(assignment10)
+
+#  assignment 11
+#  2+3
+@app.route("/assignment11/users")
+def assignment11_page():
+    query = "select * from users"
+    query_result = query_to_json(query=query)
+    return json.dumps(query_result)
+
+#  4+5
+@app.route("/assignment11/outer_source", methods=['GET'])
+def assignment11_outer_source_page():
+    if 'number' in request.args:
+        number = request.args['number']
+        res = requests.get(url=f"https://reqres.in/api/users/{number}")
+        res = res.json()
+        return render_template('assignment11.html', user=res['data'])
+    return render_template('assignment11.html')
 
 if __name__ == '__main__':
     app.secret_key = '123'
