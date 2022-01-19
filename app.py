@@ -83,7 +83,20 @@ def assignment11_outer_source_page():
         res = requests.get(url=f"https://reqres.in/api/users/{number}")
         res = res.json()
         return render_template('assignment11.html', user=res['data'])
+
     return render_template('assignment11.html')
+
+
+#  assignment 12
+@app.route('/assignment12/restapi_users', defaults={'user_id': 1})
+@app.route("/assignment12/restapi_users/<int:user_id>")
+def assignment12(user_id):
+    query = 'select * from users where id=%s' % user_id
+    query_result = query_to_json(query=query)
+    if len(query_result) == 0:
+        query_result = [{'status': 'failed', 'message': 'user not found'}]
+    return json.dumps(query_result)
+
 
 if __name__ == '__main__':
     app.secret_key = '123'
